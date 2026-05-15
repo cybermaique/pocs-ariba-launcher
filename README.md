@@ -1,14 +1,17 @@
-﻿# Ariba Launcher POC
+# Intelligent Buy Ariba Launcher
 
-Página intermediária estática para validar a abertura do Intelligent Buy a partir de um modal/iframe da SAP Ariba.
+POC estática de launcher para SAP Ariba. A página é carregada em um modal/iframe da Ariba e abre o Intelligent Buy em uma nova aba, preservando os query params recebidos.
 
-## Tecnologia
+## Como funciona
 
-HTML, CSS e JavaScript puros. Não depende do app Next principal e pode ser publicada como site estático no Vercel ou em host equivalente.
+- Recebe os parâmetros enviados pela Ariba na URL do launcher.
+- Mantém esses parâmetros ao abrir `Abrir Mapa` ou `Abrir Resumo`.
+- Usa fallback manual quando o navegador ou o iframe bloqueia a abertura automática da nova aba.
+- Não depende do app Next principal, backend, autenticação ou headers específicos.
 
-## Rotas configuradas
+## Configuração
 
-A configuração fica em `launcher.config.js`:
+Os destinos ficam centralizados em `launcher.config.js`:
 
 ```js
 window.ARIBA_LAUNCHER_CONFIG = {
@@ -18,63 +21,56 @@ window.ARIBA_LAUNCHER_CONFIG = {
 };
 ```
 
-- `mapPath`: alias existente do app principal que resolve o Mapa Comparativo usando `projectId` e `eventId`.
-- `summaryPath`: alias existente do app principal que resolve o Resumo Executivo premiado usando `projectId` e `eventId`.
+- `appBaseUrl`: URL base do Intelligent Buy.
+- `mapPath`: rota usada para abrir o Mapa.
+- `summaryPath`: rota usada para abrir o Resumo.
 
-Todos os query params recebidos pelo launcher são preservados na URL final, inclusive parâmetros desconhecidos.
+O valor atual de `summaryPath` deve ser validado no ambiente Intelligent Buy/HML e no fluxo real da Ariba antes da aprovação final.
 
 ## Como rodar localmente
 
-Na raiz do repositório:
+Na raiz deste projeto:
 
 ```bash
-npx serve pocs/ariba-launcher
+npx serve .
 ```
 
-Depois abra:
+Depois abra a URL exibida pelo `serve`, por exemplo:
 
 ```text
-http://localhost:3000/ariba-launcher?realm=744862388-T&eventId=Doc2200752930&projectId=WS2200752923
+http://localhost:3000
 ```
 
-Se o `serve` escolher outra porta, ajuste a URL conforme exibido no terminal.
+## Como testar com query params
 
-## Como publicar no Vercel
-
-1. Crie um novo projeto no Vercel apontando para este repositório.
-2. Configure o diretório raiz do projeto como `pocs/ariba-launcher`.
-3. Use build command vazio ou nenhum build command.
-4. Use output/public directory vazio ou `.` conforme a UI do Vercel solicitar.
-5. Publique e configure na Ariba a URL publicada com o path `/ariba-launcher`.
-
-Exemplo:
+Abra o launcher incluindo os parâmetros simulados da Ariba:
 
 ```text
-https://seu-launcher.vercel.app/ariba-launcher?realm=...&eventId=...&projectId=...
+http://localhost:3000?realm=744862388-T&eventId=Doc2200752930&projectId=WS2200752923
 ```
 
-## Testes manuais fora da Ariba
+Valide:
 
-1. Rodar o site estático localmente.
-2. Abrir `/ariba-launcher?realm=744862388-T&eventId=Doc2200752930&projectId=WS2200752923`.
-3. Clicar em `Abrir Mapa` e validar se abre `https://uintelligentbuy-hml.stratesys.io/admin/maps` preservando os parâmetros.
-4. Clicar em `Abrir Resumo` e validar se abre `https://uintelligentbuy-hml.stratesys.io/admin/review/quotation` preservando os parâmetros.
-5. Simular bloqueio de popup e validar se aparece o fallback com link manual e botão de copiar.
-6. Testar em viewport pequeno semelhante ao modal da Ariba.
+1. `Abrir Mapa` abre `https://uintelligentbuy-hml.stratesys.io/admin/maps` preservando os parâmetros.
+2. `Abrir Resumo` abre `https://uintelligentbuy-hml.stratesys.io/admin/review/quotation` preservando os parâmetros.
+3. O fallback exibe `Abrir link manualmente` e `Copiar link` caso a nova aba seja bloqueada.
+4. `launcher.config.js` carrega sem erro 404 no console.
 
-## Testes manuais dentro da Ariba
+## Deploy na Vercel
 
-1. Publicar a POC em Vercel ou host estático.
-2. Configurar temporariamente a URL do launcher como link externo na Ariba.
-3. Clicar no link dentro da Ariba.
-4. Confirmar que a página carrega no modal/iframe.
-5. Confirmar que os query params chegam corretamente.
-6. Clicar em `Abrir Mapa` e validar abertura em nova aba.
-7. Clicar em `Abrir Resumo` e validar abertura em nova aba.
-8. Se o popup for bloqueado, validar o fallback manual.
+Configure o projeto da Vercel apontando para esta pasta como raiz do projeto. Não é necessário build.
 
-## Pendências de validação
+Sugestão:
 
-- Confirmar com o líder técnico se `/admin/review/quotation` é o alias final esperado para Resumo Executivo na integração Ariba.
-- Confirmar se o sandbox/modal da Ariba permite `window.open` por clique do usuário.
-- Confirmar se a configuração final da Ariba enviará sempre `realm`, `eventId` e `projectId`.
+- Build command: vazio.
+- Output directory: vazio ou `.` conforme a UI da Vercel solicitar.
+- Arquivo de configuração: `launcher.config.js` deve ficar publicado junto com `index.html`.
+
+## Validação dentro da Ariba
+
+O teste final precisa ser feito dentro da SAP Ariba para confirmar:
+
+1. Se o modal/iframe permite `window.open` em uma ação de clique do usuário.
+2. Se os query params chegam corretamente ao launcher.
+3. Se o Intelligent Buy recebe os mesmos parâmetros ao abrir Mapa ou Resumo.
+4. Se `/admin/review/quotation` é a rota final correta para o Resumo no ambiente HML/Ariba.

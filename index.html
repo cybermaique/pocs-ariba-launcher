@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Intelligent Buy | Ariba Launcher</title>
-    <script src="../launcher.config.js"></script>
+    <script src="launcher.config.js"></script>
     <style>
       :root {
         --brand-navy: #002060;
@@ -20,7 +20,7 @@
         --muted-2: #94a3b8;
         --danger: #b42318;
         --danger-soft: #fff1f0;
-        --shadow: 0 24px 70px rgba(15, 23, 42, 0.18);
+        --shadow: 0 18px 48px rgba(15, 23, 42, 0.16);
         font-family:
           ui-sans-serif,
           system-ui,
@@ -63,21 +63,21 @@
         display: grid;
         min-height: 100vh;
         place-items: center;
-        padding: 24px;
+        padding: 16px;
       }
 
       .card {
-        width: min(100%, 460px);
+        width: min(100%, 420px);
         overflow: hidden;
         border: 1px solid rgba(255, 255, 255, 0.22);
-        border-radius: 28px;
+        border-radius: 18px;
         background: rgba(255, 255, 255, 0.97);
         box-shadow: var(--shadow);
         animation: card-in 520ms cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
       .hero {
-        padding: 28px 28px 22px;
+        padding: 22px 24px 18px;
         color: #ffffff;
         background:
           radial-gradient(circle at 92% 12%, rgba(233, 106, 21, 0.36), transparent 9rem),
@@ -92,30 +92,30 @@
 
       .brand-mark {
         display: grid;
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         flex: 0 0 auto;
         place-items: center;
-        border-radius: 14px;
+        border-radius: 10px;
         background: #ffffff;
         color: var(--brand-navy);
         font-size: 0.95rem;
         font-weight: 900;
-        letter-spacing: -0.08em;
+        letter-spacing: 0;
       }
 
       .brand-name {
         margin: 0;
-        font-size: 1.35rem;
+        font-size: 1.2rem;
         font-weight: 800;
-        letter-spacing: -0.03em;
+        letter-spacing: 0;
       }
 
       .eyebrow {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        margin: 24px 0 10px;
+        margin: 18px 0 8px;
         color: #ffb17b;
         font-size: 0.68rem;
         font-weight: 800;
@@ -133,13 +133,13 @@
 
       .headline {
         margin: 0;
-        font-size: clamp(1.55rem, 6vw, 2rem);
-        line-height: 1.08;
-        letter-spacing: -0.045em;
+        font-size: 1.55rem;
+        line-height: 1.15;
+        letter-spacing: 0;
       }
 
       .content {
-        padding: 28px;
+        padding: 22px 24px 24px;
       }
 
       .description {
@@ -152,7 +152,7 @@
       .actions {
         display: grid;
         gap: 12px;
-        margin: 24px 0 16px;
+        margin: 20px 0 12px;
       }
 
       .button,
@@ -162,7 +162,7 @@
         align-items: center;
         justify-content: center;
         border: 0;
-        border-radius: 14px;
+        border-radius: 10px;
         font: inherit;
         font-weight: 800;
         text-decoration: none;
@@ -174,7 +174,7 @@
       }
 
       .button {
-        min-height: 52px;
+        min-height: 48px;
         padding: 0 18px;
       }
 
@@ -213,10 +213,10 @@
 
       .fallback {
         display: none;
-        margin-top: 20px;
-        padding: 16px;
+        margin-top: 16px;
+        padding: 14px;
         border: 1px solid #fed7d2;
-        border-radius: 18px;
+        border-radius: 12px;
         background: var(--danger-soft);
       }
 
@@ -245,7 +245,7 @@
 
       .manual-link,
       .copy-button {
-        min-height: 42px;
+        min-height: 40px;
         padding: 0 14px;
         font-size: 0.86rem;
       }
@@ -269,14 +269,6 @@
         text-align: center;
       }
 
-      .footer-note {
-        margin: 22px 0 0;
-        color: var(--muted-2);
-        font-size: 0.72rem;
-        line-height: 1.5;
-        text-align: center;
-      }
-
       @keyframes card-in {
         from {
           opacity: 0;
@@ -295,12 +287,12 @@
         }
 
         .card {
-          border-radius: 22px;
+          border-radius: 16px;
         }
 
         .hero,
         .content {
-          padding: 20px;
+          padding: 18px;
         }
 
         .actions {
@@ -308,7 +300,7 @@
         }
 
         .button {
-          min-height: 48px;
+          min-height: 46px;
         }
       }
     </style>
@@ -322,15 +314,12 @@
             <p class="brand-name">Intelligent Buy</p>
           </div>
           <span class="eyebrow">SmartMap</span>
-          <h1 class="headline" id="page-title">
-            Escolha onde deseja abrir o conteúdo do Intelligent Buy.
-          </h1>
+          <h1 class="headline" id="page-title">Abrir no Intelligent Buy</h1>
         </header>
 
         <div class="content">
           <p class="description">
-            Esta página intermediária carrega dentro da Ariba e abre o Intelligent Buy em uma nova
-            aba.
+            Escolha abaixo se deseja acessar o Mapa ou o Resumo em uma nova aba.
           </p>
 
           <div class="actions" aria-label="Ações disponíveis">
@@ -345,10 +334,10 @@
           <p class="hint">Você será direcionado para uma nova aba.</p>
 
           <div class="fallback" id="fallback" data-visible="false" aria-live="polite">
-            <p class="fallback-title">Não foi possível abrir a nova aba automaticamente.</p>
+            <p class="fallback-title">Não foi possível abrir automaticamente.</p>
             <p class="fallback-text">
-              O modal ou o navegador pode ter bloqueado o popup. Use o link manual abaixo ou copie a
-              URL.
+              O navegador ou a Ariba pode ter bloqueado a nova aba. Use o link manual abaixo ou
+              copie a URL.
             </p>
             <div class="fallback-actions">
               <a
@@ -363,11 +352,7 @@
               <button class="copy-button" id="copy-link" type="button">Copiar link</button>
             </div>
           </div>
-
           <p class="status" id="status" aria-live="polite"></p>
-          <p class="footer-note">
-            Os parâmetros recebidos da Ariba são preservados ao abrir o destino selecionado.
-          </p>
         </div>
       </section>
     </main>
@@ -380,6 +365,7 @@
           summaryPath: '/admin/review/quotation',
         };
 
+        // Os query params recebidos da Ariba sao preservados ao abrir o destino selecionado.
         const config = Object.assign({}, DEFAULT_CONFIG, window.ARIBA_LAUNCHER_CONFIG || {});
         const fallback = document.getElementById('fallback');
         const manualLink = document.getElementById('manual-link');
