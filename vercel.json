@@ -1,0 +1,8 @@
+﻿{
+  "rewrites": [
+    {
+      "source": "/ariba-launcher",
+      "destination": "/ariba-launcher/index.html"
+    }
+  ]
+}
